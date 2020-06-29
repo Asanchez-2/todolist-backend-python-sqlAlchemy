@@ -1,22 +1,17 @@
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
 
 db = SQLAlchemy()
 
-engine = create_engine('mysql://root@localhost:3306/example')
-
-class Todo(db.Model):
-    __tablename__ = 'todolist'
+class Todos(db.Model):
+    __tablename__= 'todos'
     id = db.Column(db.Integer, primary_key=True)
-    label = db.Column(db.String(250), unique=True, nullable=False)
-    done = db.Column(db.Boolean, default=True, nullable=False)
-
-    def __repr__(self):
-        return '<Todo %r>' % self.label
+    done = db.Column(db.Boolean, nullable=False)
+    label = db.Column(db.String(255), unique=True, nullable=False)
+    
 
     def serialize(self):
         return {
-            "id": self.id,
-            "label": self.label,
-            "done": self.done
+            "id":self.id,
+            "done": self.done,
+            "label": self.label
         }
